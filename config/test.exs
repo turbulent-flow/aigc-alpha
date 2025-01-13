@@ -12,3 +12,11 @@ config :logger, level: :warning
 
 # Initialize plugs at runtime for faster test compilation
 config :phoenix, :plug_init_mode, :runtime
+
+config :tesla, adapter: Tesla.Mock
+
+config :aigc_alpha, :wen_xin,
+  api_key: "fake-key",
+  model: "fake-model",
+  basic_url: "https://example.com",
+  inquire_path: "/fake-path"

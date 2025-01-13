@@ -30,6 +30,10 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
+config :tesla, adapter: Tesla.Adapter.Mint
+
+config :aigc_alpha, :wen_xin, adapter: AIGCAlpha.AIGCClient.WenXin
+
 env = config_env()
 
 if "#{env}.exs" |> Path.expand(__DIR__) |> File.exists?() do
