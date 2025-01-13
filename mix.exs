@@ -51,7 +51,11 @@ defmodule AIGCAlpha.MixProject do
   # See the documentation for `Mix` for more info on aliases.
   defp aliases do
     [
-      setup: ["deps.get"]
+      setup: ["deps.get"],
+      check: [
+        "format --check-formatted",
+        "compile --all-warnings --warnings-as-errors"
+      ]
     ]
   end
 end
