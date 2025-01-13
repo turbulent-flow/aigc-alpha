@@ -30,6 +30,12 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
-# Import environment specific config. This must remain at the bottom
-# of this file so it overrides the configuration defined above.
-import_config "#{config_env()}.exs"
+env = config_env()
+
+if "#{env}.exs" |> Path.expand(__DIR__) |> File.exists?() do
+  import_config "#{env}.exs"
+
+  if "#{env}.secret.exs" |> Path.expand(__DIR__) |> File.exists?() do
+    import_config "#{env}.secret.exs"
+  end
+end
