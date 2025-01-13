@@ -7,14 +7,6 @@ defmodule AIGCAlpha.AIGCClient.WenXin do
 
   @behaviour AIGCClient
 
-  @spec inquire(
-          atom()
-          | %{
-              :content => any(),
-              :template => atom() | %{:content => binary(), optional(any()) => any()},
-              optional(any()) => any()
-            }
-        ) :: {:error, struct()} | {:ok, struct()}
   def inquire(input) do
     with params <- normalize(input),
          {:ok, result} <- Tesla.post(client(), inquire_path(), params),
