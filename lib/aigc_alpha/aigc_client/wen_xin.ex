@@ -24,7 +24,7 @@ defmodule AIGCAlpha.AIGCClient.WenXin do
         error_struct = Error.new(error_params)
 
         Logger.error(
-          ~s[Call AIGCAlpha.AIGCClient.inquire/1 failed, as the reason is #{inspect(error_struct)}.]
+          ~s[Calling AIGCAlpha.AIGCClient.inquire/1 failed, as the reason is #{inspect(error_struct)}.]
         )
 
         {:error, error_struct}
