@@ -7,9 +7,12 @@ defmodule AIGCAlpha.AIGCClient.WenXin do
 
   @behaviour AIGCClient
 
+  @timeout 60_000
+
   def inquire(input) do
-    with params <- normalize(input),
-         {:ok, result} <- Tesla.post(client(), inquire_path(), params),
+    with params <- normalize(input) |> IO.inspect(label: "params"),
+         {:ok, result} <-
+           Tesla.post(client(), inquire_path(), params) |> IO.inspect(label: "response_from_http"),
          :ok <- validate(result),
          content <- normalize_content(result.body) do
       {:ok, Output.new(%{content: content})}
@@ -64,9 +67,12 @@ defmodule AIGCAlpha.AIGCClient.WenXin do
       Tesla.Middleware.JSON,
       {Tesla.Middleware.Headers,
        [
-         {"authorization", "Bearer #{api_key()}"}
+         {"authorization", "Bearer #{api_key()}"},
+         {"x-request-id", UUID.uuid4()}
        ]}
     ]
+    |> Kernel.++(extra_middlewares())
+    |> IO.inspect(label: "headers")
   end
 
   defp normalize(input) do
@@ -108,5 +114,11 @@ defmodule AIGCAlpha.AIGCClient.WenXin do
   defp model do
     Application.fetch_env!(:aigc_alpha, :wen_xin)
     |> Keyword.fetch!(:model)
+  end
+
+  if Mix.env() == :test do
+    defp extra_middlewares, do: []
+  else
+    defp extra_middlewares, do: [{Tesla.Middleware.Timeout, timeout: @timeout}]
   end
 end

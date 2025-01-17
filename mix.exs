@@ -39,7 +39,8 @@ defmodule AIGCAlpha.MixProject do
       {:dns_cluster, "~> 0.1.1"},
       {:bandit, "~> 1.5"},
       {:tesla, "~> 1.13"},
-      {:mint, "~> 1.6"}
+      {:mint, "~> 1.6"},
+      {:elixir_uuid, "~> 1.2"}
     ]
   end
 
