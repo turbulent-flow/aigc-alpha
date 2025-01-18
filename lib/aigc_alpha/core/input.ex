@@ -4,7 +4,7 @@ defmodule AIGCAlpha.Core.Input do
   defstruct content: nil, template: %Template{}
 
   @type t :: %__MODULE__{
-          content: String.t(),
+          content: String.t() | nil,
           template: Template.t()
         }
 

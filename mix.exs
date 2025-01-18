@@ -40,7 +40,8 @@ defmodule AIGCAlpha.MixProject do
       {:bandit, "~> 1.5"},
       {:tesla, "~> 1.13"},
       {:mint, "~> 1.6"},
-      {:elixir_uuid, "~> 1.2"}
+      {:elixir_uuid, "~> 1.2"},
+      {:hammox, "~> 0.7.0"}
     ]
   end
 

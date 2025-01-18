@@ -15,7 +15,8 @@ config :phoenix, :plug_init_mode, :runtime
 
 config :tesla, adapter: Tesla.Mock
 
-config :aigc_alpha, :wen_xin,
+config :aigc_alpha, :aigc_client,
+  adapter: AIGCAlpha.AIGCClientMock,
   api_key: "fake-key",
   model: "fake-model",
   basic_url: "https://example.com",

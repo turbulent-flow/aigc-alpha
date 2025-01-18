@@ -32,7 +32,7 @@ config :phoenix, :json_library, Jason
 
 config :tesla, adapter: {Tesla.Adapter.Mint, timeout: 60_000}
 
-config :aigc_alpha, :wen_xin, adapter: AIGCAlpha.AIGCClient.WenXin
+config :aigc_alpha, :aigc_client, adapter: AIGCAlpha.AIGCClient.WenXin
 
 env = config_env()
 

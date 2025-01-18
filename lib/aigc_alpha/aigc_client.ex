@@ -8,7 +8,7 @@ defmodule AIGCAlpha.AIGCClient do
   def inquire(input), do: impl(:inquire, [input])
 
   defp impl(func, args) do
-    Application.fetch_env!(:aigc_alpha, :wen_xin)
+    Application.fetch_env!(:aigc_alpha, :aigc_client)
     |> Keyword.fetch!(:adapter)
     |> apply(func, args)
   end

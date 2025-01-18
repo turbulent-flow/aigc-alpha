@@ -7,12 +7,10 @@ defmodule AIGCAlpha.AIGCClient.WenXin do
 
   @behaviour AIGCClient
 
-  @timeout 60_000
-
   def inquire(input) do
-    with params <- normalize(input) |> IO.inspect(label: "params"),
+    with params <- normalize(input),
          {:ok, result} <-
-           Tesla.post(client(), inquire_path(), params) |> IO.inspect(label: "response_from_http"),
+           Tesla.post(client(), inquire_path(), params),
          :ok <- validate(result),
          content <- normalize_content(result.body) do
       {:ok, Output.new(%{content: content})}
@@ -72,7 +70,6 @@ defmodule AIGCAlpha.AIGCClient.WenXin do
        ]}
     ]
     |> Kernel.++(extra_middlewares())
-    |> IO.inspect(label: "headers")
   end
 
   defp normalize(input) do
@@ -97,28 +94,28 @@ defmodule AIGCAlpha.AIGCClient.WenXin do
     }
 
   defp inquire_path do
-    Application.fetch_env!(:aigc_alpha, :wen_xin)
+    Application.fetch_env!(:aigc_alpha, :aigc_client)
     |> Keyword.fetch!(:inquire_path)
   end
 
   defp api_key do
-    Application.fetch_env!(:aigc_alpha, :wen_xin)
+    Application.fetch_env!(:aigc_alpha, :aigc_client)
     |> Keyword.fetch!(:api_key)
   end
 
   defp basic_url do
-    Application.fetch_env!(:aigc_alpha, :wen_xin)
+    Application.fetch_env!(:aigc_alpha, :aigc_client)
     |> Keyword.fetch!(:basic_url)
   end
 
   defp model do
-    Application.fetch_env!(:aigc_alpha, :wen_xin)
+    Application.fetch_env!(:aigc_alpha, :aigc_client)
     |> Keyword.fetch!(:model)
   end
 
   if Mix.env() == :test do
     defp extra_middlewares, do: []
   else
-    defp extra_middlewares, do: [{Tesla.Middleware.Timeout, timeout: @timeout}]
+    defp extra_middlewares, do: [{Tesla.Middleware.Timeout, timeout: 60_000}]
   end
 end
