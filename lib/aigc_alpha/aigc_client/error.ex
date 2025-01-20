@@ -2,6 +2,7 @@ defmodule AIGCAlpha.AIGCClient.Error do
   alias AIGCAlpha.Core.Input
   alias AIGCAlpha.AIGCClient.WenXin
 
+  @derive Jason.Encoder
   defstruct status: 400, adapter: WenXin, params: %Input{}, details: nil
 
   @type t :: %__MODULE__{

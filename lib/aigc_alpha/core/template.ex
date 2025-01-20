@@ -1,4 +1,5 @@
 defmodule AIGCAlpha.Core.Template do
+  @derive Jason.Encoder
   defstruct type: :translate_to_en, content: "请把大括号中的中文翻译成英文，{xxxxx}。"
 
   @type t :: %__MODULE__{

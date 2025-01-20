@@ -1,6 +1,7 @@
 defmodule AIGCAlpha.Core.Input do
   alias AIGCAlpha.Core.Template
 
+  @derive Jason.Encoder
   defstruct content: nil, template: %Template{}
 
   @type t :: %__MODULE__{

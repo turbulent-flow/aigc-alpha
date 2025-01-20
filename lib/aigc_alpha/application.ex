@@ -2,6 +2,7 @@ defmodule AIGCAlpha.Application do
   # See https://hexdocs.pm/elixir/Application.html
   # for more information on OTP Applications
   @moduledoc false
+  alias AIGCAlpha.TCPServer
 
   use Application
 
@@ -14,7 +15,9 @@ defmodule AIGCAlpha.Application do
       # Start a worker by calling: AIGCAlpha.Worker.start_link(arg)
       # {AIGCAlpha.Worker, arg},
       # Start to serve requests, typically the last entry
-      AIGCAlphaWeb.Endpoint
+      AIGCAlphaWeb.Endpoint,
+      {Task.Supervisor, name: TCPServer.TaskSupervisor},
+      Supervisor.child_spec({Task, fn -> TCPServer.accept(4040) end}, restart: :permanent)
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
