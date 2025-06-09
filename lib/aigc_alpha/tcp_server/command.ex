@@ -34,6 +34,7 @@ defmodule AIGCAlpha.TCPServer.Command do
   defp extract_content(data) do
     ~r/{.*?}/
     |> Regex.run(data, capture: :first)
+    |> IO.inspect(label: "matched")
     |> hd()
     |> String.replace(["{", "}"], "")
   end

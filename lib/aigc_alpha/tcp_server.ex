@@ -31,8 +31,8 @@ defmodule AIGCAlpha.TCPServer do
     with {:ok, data} <- read_line(socket),
          {:ok, command} <- Command.parse(data),
          {:ok, output} <- Command.run(command),
-         normalized <- normalize(output.content),
-         :ok <- write_line(socket, normalized) do
+         normalized <- normalize(output.content) |> IO.inspect(label: "normalized"),
+         :ok <- write_line(socket, normalized) |> IO.inspect(label: "written_data") do
       :ok
     else
       {:error, %AIGCClientError{} = error_data} = error ->
@@ -49,6 +49,12 @@ defmodule AIGCAlpha.TCPServer do
         write_line(socket, normalized)
 
         error
+
+      {:error, :enotconn} ->
+        Process.exit(self(), :normal)
+
+      {:error, :closed} ->
+        Process.exit(self(), :normal)
 
       {:error, _} = error ->
         Logger.error(
